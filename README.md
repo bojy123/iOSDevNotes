@@ -1,37 +1,15 @@
-- [RunTime相关问题1](#runtime相关问题)
-- [RunTime相关问题](#runtime相关问题)
-- [RunTime相关问题](#runtime相关问题)
-- [RunTime相关问题](#runtime相关问题) 
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
+- [视图&图像相关](#视图&图像相关)
+    -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
 
 
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
+## 视图&图像相关
+### 为什么必须在主线程刷新UI
 
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
+<details>
+<summary> 参考内容 </summary>
 
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
+- 线程：UIKit并不是一个线程安全的类，UI操作涉及到渲染访问各种View对象的属性，如果异步操作下会存在读写问题，而为其加锁则会耗费大量资源并拖慢运行速度。
+- 事件：整个程序的起点UIApplication是在主线程进行初始化，所有的用户事件都是在主线程上进行传递（如点击、拖动），所以view只能在主线程上才能对事件进行响应。
+- 渲染：由于图像的渲染需要以60帧的刷新率在屏幕上 同时 更新，在非主线程异步化的情况下无法确定这个处理过程能够实现同步更新。在子线程中如果要对UI 进行更新，必须等到该子线程运行结束才能把UI的更新提交给渲染服务。
 
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网
-
-## runtime相关问题
-
->  runtime是iOS开发最核心的知识了，如果下面的问题都解决了，那么对runtime的理解已经很深了。 runtime已经开源了，官网[objc4](https://opensource.apple.com/tarballs/objc4/)
+</details>
