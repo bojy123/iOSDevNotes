@@ -2,6 +2,7 @@
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
     -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
+    -   [如何优化离屏渲染](#如何优化离屏渲染)
 - [开源项目](#开源项目)
     -   [AsyncDisplayKit](#AsyncDisplayKit)
     
@@ -37,6 +38,25 @@
 cornerRadius+clipsToBounds，原因就如同上面提到的，不得已只能另开一块内存来操作。而如果只是设置cornerRadius（如不需要剪切内容，只需要一个带圆角的边框），或者只是需要裁掉矩形区域以外的内容（虽然也是剪切，但是稍微想一下就可以发现，对于纯矩形而言，实现这个算法似乎并不需要另开内存），并不会触发离屏渲染。
 
 </details>
+
+### 如何优化离屏渲染
+<details>
+<summary> 参考内容 </summary>
+
+- 应用AsyncDisplayKit(Texture)作为主要渲染框架，对于文字和图片的异步渲染操作交由框架来处理。
+
+- 对于图片的圆角，统一采用“precomposite”的策略，也就是不经由容器来做剪切，而是预先使用CoreGraphics为图片裁剪圆角。
+
+- 对于视频的圆角，由于实时剪切非常消耗性能，我们会创建四个白色弧形的layer盖住四个角，从视觉上制造圆角的效果。
+
+- 对于view的圆形边框，如果没有backgroundColor，可以放心使用cornerRadius来做。
+- 对于所有的阴影，使用shadowPath来规避离屏渲染。
+- 对于特殊形状的view，使用layer mask并打开shouldRasterize来对渲染结果进行缓存。
+- 对于模糊效果，不采用系统提供的UIVisualEffect，而是另外实现模糊效果（CIGaussianBlur），并手动管理渲染结果。
+
+</details>
+
+
 
 ## 开源项目
 ### AsyncDisplayKit
