@@ -1,7 +1,7 @@
 - [视图&图像相关](#视图&图像相关)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
-    -   [设置cornerRadius一定会触发离屏渲染吗？](#设置cornerRadius一定会触发离屏渲染吗？)
+    -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
 - [开源项目](#开源项目)
     -   [AsyncDisplayKit](#AsyncDisplayKit)
     
@@ -29,7 +29,7 @@
 
 </details>
 
-### 设置cornerRadius一定会触发离屏渲染吗？
+### 设置cornerRadius一定会触发离屏渲染吗
 <details>
 <summary> 参考内容 </summary>
 
