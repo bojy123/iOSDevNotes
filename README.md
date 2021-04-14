@@ -1,3 +1,5 @@
+- [RunTime](#RunTime)
+    -   [load、initialize方法的区别](#load、initialize方法的区别)
 - [视图&图像](#视图&图像)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
@@ -11,7 +13,44 @@
     -   [AsyncDisplayKit](#AsyncDisplayKit)
     -   [BeeHive](#BeeHive)
    
+   
+## RunTime
+### load、initialize方法的区别
+<details>
+<summary> 参考内容 </summary>
 
+注意点:
++initialize和+load的很大区别是，+initialize是通过objc_msgSend进行调用的，所以有以下特点
+
+- 如果子类没有实现+initialize，会调用父类的+initialize（所以父类的+initialize可能会被调用多次）
+- 如果分类实现了+initialize，就覆盖类本身的+initialize调用
+
+1.调用方式
+- load是根据函数地址直接调用
+- initialize是通过objc_msgSend调用
+
+2.调用时刻
+- load是runtime加载类、分类的时候调用（只会调用1次）
+- initialize是类第一次接收到消息的时候调用，每一个类只会initialize一次（父类的initialize方法可能会被调用多次）
+
+
+
+3.load、initialize的调用顺序？
+
+**load:**
+1.先调用类的load
+- 先编译的类，优先调用load
+- 调用子类的load之前，会先调用父类的load
+
+2.再调用分类的load
+- 先编译的分类，优先调用load
+
+**initialize:**
+1.先初始化父类
+2.再初始化子类（可能最终调用的是父类的initialize方法）
+</details>
+
+   
 ## 视图&图像
 ### 为什么必须在主线程刷新UI
 
