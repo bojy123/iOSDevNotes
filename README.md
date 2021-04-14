@@ -1,13 +1,18 @@
-- [视图&图像相关](#视图&图像相关)
+- [视图&图像](#视图&图像)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
     -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
     -   [如何优化离屏渲染](#如何优化离屏渲染)
+- [架构](#架构)
+    -   [模块解耦](#模块解耦)
+- [设计模式](#设计模式)
+    -   [六大设计模式原则](#六大设计模式原则)  
 - [开源项目](#开源项目)
     -   [AsyncDisplayKit](#AsyncDisplayKit)
-    
+    -   [BeeHive](#BeeHive)
+   
 
-## 视图&图像相关
+## 视图&图像
 ### 为什么必须在主线程刷新UI
 
 <details>
@@ -57,6 +62,27 @@ cornerRadius+clipsToBounds，原因就如同上面提到的，不得已只能另
 </details>
 
 
+## 架构
+### 模块解耦
+
+<details>
+<summary> 参考内容 </summary>
+- URLRouter：将不同的模块定义成为不同的URL，通过URL的形式进行跨模块调用。
+- Target-Action：利用OC的runtime能力，动态的调用指定Target的action；
+- ProtocolClass：模块实现指定的协议，依赖方通过协议对象以及协议方法对模块进行访问；
+</details>
+
+## 设计模式
+### 六大设计模式原则
+<details>
+<summary> 参考内容 </summary>
+单一功能原则：对象功能要单一，不要在一个对象里添加很多功能。
+里氏替换原则：子类对象，可以替代基类对象。
+依赖倒置原则：方法应该依赖抽象，不要依赖实例。iOS 开发就是高层业务方法依赖于协议。
+接口隔离原则：接口的用途要单一，不要在一个接口上根据不同入参实现多个功能。
+迪米特法则：类间解耦，低耦合，高内聚。
+开放封闭原则：尽量通过扩展软件实体来解决需求变化，而不是通过修改已有的代码来完成变化。
+</details>
 
 ## 开源项目
 ### AsyncDisplayKit
@@ -74,4 +100,12 @@ iOS自带的Autolayout在布局性能上存在瓶颈，并且只能在主线程�
 
 - 系统对象创建与销毁：
 UIKit组件封装了CALayer图层的对象，在创建、调整、销毁的时候，都会在主线程消耗资源。ASDK自己设计了一套Node机制，也能够调用。
+</details>
+
+###BeeHive
+<details>
+<summary> 参考内容 </summary>
+
+>  BeeHive是用于iOS应用开发的App模块化编程的框架实现方案，吸收了Spring框架Service的理念来实现模块间的API耦合。Github：[BeeHive](https://github.com/alibaba/BeeHive)
+
 </details>
