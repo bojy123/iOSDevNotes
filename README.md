@@ -1,5 +1,7 @@
 - [RunTime](#RunTime)
-    -   [load、initialize方法的区别](#load、initialize方法的区别)
+    -   [load和initialize方法的区别](#load和initialize方法的区别)
+    -   [category和extension的区别](#category和extension的区别)
+    -   [为什么Runtime可以给category添加属性](#为什么Runtime可以给category添加属性)
 - [视图&图像](#视图&图像)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
@@ -18,7 +20,7 @@
    
    
 ## RunTime
-### load、initialize方法的区别
+### load和initialize方法的区别
 <details>
 <summary> 参考内容 </summary>
 
@@ -53,6 +55,30 @@
 2.再初始化子类（可能最终调用的是父类的initialize方法）
 </details>
 
+### category和extension的区别
+<details>
+<summary> 参考内容 </summary>
+
+> extension可以添加实例变量，而category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。
+
+- extension在编译期决议，它就是类的一部分，但是category则完全不一样，它是在运行期决议的。extension在编译期和头文件里的@interface以及实现文件里的@implement一起形成一个完整的类，它、extension伴随类的产生而产生，亦随之一起消亡。
+
+- extension一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加extension，所以你无法为系统的类比如NSString添加extension，除非创建子类再添加extension。而category不需要有类的源码，我们可以给系统提供的类添加category。
+
+- extension可以添加实例变量，而category不可以。
+
+- extension和category都可以添加属性，但是category的属性不能生成成员变量和getter、setter方法的实现。
+
+</details>
+
+### 为什么Runtime可以给category添加属性
+
+<details>
+<summary> 参考内容 </summary>
+
+关联对象都由AssociationsManager管理，AssociationsManager里面是由一个静态AssociationsHashMap来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局map里面。而map的的key是这个对象的指针地址（任意两个不同对象的指针地址一定是不同的），而这个map的value又是另外一个AssAssociationsHashMap，里面保存了关联对象的kv对。
+
+</details>
    
 ## 视图&图像
 ### 为什么必须在主线程刷新UI
