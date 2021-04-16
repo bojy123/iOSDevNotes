@@ -5,6 +5,9 @@
     -   [什么是离屏渲染](#什么是离屏渲染)
     -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
     -   [如何优化离屏渲染](#如何优化离屏渲染)
+- [性能优化](#性能优化)
+     -   [iOS如何监控线程卡顿](#iOS如何监控线程卡顿)
+     -   [FPS监测](#FPS监测)
 - [架构](#架构)
     -   [模块解耦](#模块解耦)
 - [设计模式](#设计模式)
@@ -100,6 +103,34 @@ cornerRadius+clipsToBounds，原因就如同上面提到的，不得已只能另
 
 </details>
 
+## 性能优化
+### iOS如何监控线程卡顿
+<details>
+<summary> 参考内容 </summary>
+
+**卡顿原因：**
+- 死锁
+- 抢锁
+- 大量的Ui绘制,复杂的UI，图文混排
+- 主线程大量IO、大量计算
+
+**监控方法：**
+- 首先，创建一个观察者runLoopObserver，用于观察主线程的runloop状态。同时，还要创建一个信号量dispatchSemaphore，用于保证同步操作。
+- 其次，将观察者runLoopObserver添加到主线程runloop中观察。
+- 然后，开启一个子线程，并且在子线程中开启一个持续的loop来监控主线程runloop的状态。
+- 如果发现主线程runloop的状态卡在为BeforeSources或者AfterWaiting超过88毫秒时，即表明主线程当前卡顿。这时候，我们保存主线程当前的调用堆栈即可达成监控目的。
+
+</details>
+
+### FPS监测
+<details>
+<summary> 参考内容 </summary>
+
+通常情况下，屏幕会保持60hz/s的刷新速度，每次刷新时会发出一个屏幕刷新信号，CADisplayLink允许我们注册一个与刷新信号同步的回调处理。可以通过屏幕刷新机制来展示fps值。
+
+正常情况下，屏幕会保持60hz/s的刷新速度，所以1秒内fpsDisplayLinkAction:方法会调用60次。
+
+</details>
 
 ## 架构
 ### 模块解耦
