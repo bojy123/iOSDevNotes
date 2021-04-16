@@ -2,6 +2,7 @@
     -   [load和initialize方法的区别](#load和initialize方法的区别)
     -   [category和extension的区别](#category和extension的区别)
     -   [为什么Runtime可以给category添加属性](#为什么Runtime可以给category添加属性)
+    -   [iOS内存布局](#iOS内存布局)
 - [视图&图像](#视图&图像)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
@@ -77,6 +78,15 @@
 <summary> 参考内容 </summary>
 
 关联对象都由AssociationsManager管理，AssociationsManager里面是由一个静态AssociationsHashMap来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局map里面。而map的的key是这个对象的指针地址（任意两个不同对象的指针地址一定是不同的），而这个map的value又是另外一个AssAssociationsHashMap，里面保存了关联对象的kv对。
+
+</details>
+
+### iOS内存布局
+<details>
+<summary> 参考内容 </summary>
+
+iOS程序安装之后，是以Mach-o文件的格式保存在iOS设备里面，当启动程序时，对应的Mach-o文件就会被加载进内存。内存布局已确定，寻址快，开销小。
+![参考图示](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xMzg3NDcyLTUzMzgxNDU1ZGIzYmIwYzkucG5n?x-oss-process=image/format,png)
 
 </details>
    
