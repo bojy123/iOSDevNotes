@@ -8,6 +8,7 @@
     -   [什么是离屏渲染](#什么是离屏渲染)
     -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
     -   [如何优化离屏渲染](#如何优化离屏渲染)
+    -   [UIView和CAlayer](#UIView和CAlayer)
 - [性能优化](#性能优化)
      -   [iOS如何监控线程卡顿](#iOS如何监控线程卡顿)
      -   [FPS监测](#FPS监测)
@@ -136,6 +137,14 @@ cornerRadius+clipsToBounds，原因就如同上面提到的，不得已只能另
 - 对于所有的阴影，使用shadowPath来规避离屏渲染。
 - 对于特殊形状的view，使用layer mask并打开shouldRasterize来对渲染结果进行缓存。
 - 对于模糊效果，不采用系统提供的UIVisualEffect，而是另外实现模糊效果（CIGaussianBlur），并手动管理渲染结果。
+
+</details>
+
+### UIView和CAlayer
+<details>
+<summary> 参考内容 </summary>
+
+UIView主要处理事件传递，CAlayer主要做视图显示，之所以这样设计，是因为单一功能原则。
 
 </details>
 
