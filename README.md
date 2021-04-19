@@ -3,7 +3,7 @@
     -   [category和extension的区别](#category和extension的区别)
     -   [为什么Runtime可以给category添加属性](#为什么Runtime可以给category添加属性)
     -   [iOS内存布局](#iOS内存布局)
-- [视图&图像](#视图&图像)
+- [视图和图像](#视图和图像)
     -   [为什么必须在主线程刷新UI](#为什么必须在主线程刷新UI)
     -   [什么是离屏渲染](#什么是离屏渲染)
     -   [设置cornerRadius一定会触发离屏渲染吗](#设置cornerRadius一定会触发离屏渲染吗)
@@ -91,7 +91,7 @@ iOS程序安装之后，是以Mach-o文件的格式保存在iOS设备里面，�
 
 </details>
    
-## 视图&图像
+## 视图和图像
 ### 为什么必须在主线程刷新UI
 
 <details>
